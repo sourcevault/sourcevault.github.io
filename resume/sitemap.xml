@@ -3,23 +3,23 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/about/</loc>
+    <loc>https://sourcevault.github.io/about/</loc>
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>https://sourcevault.github.io/</loc>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>https://sourcevault.github.io/categories/</loc>
   </url>
   
   <url>
-    <loc>/contact/</loc>
+    <loc>https://sourcevault.github.io/contact/</loc>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://sourcevault.github.io/tags/</loc>
   </url>
   
 </urlset>
