@@ -3,11 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/about/</loc>
-  </url>
-  
-  <url>
-    <loc>/</loc>
+    <loc>/ukraine/</loc>
   </url>
   
   <url>
@@ -16,6 +12,14 @@
   
   <url>
     <loc>/contact/</loc>
+  </url>
+  
+  <url>
+    <loc>/about/</loc>
+  </url>
+  
+  <url>
+    <loc>/</loc>
   </url>
   
   <url>
