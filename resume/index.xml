@@ -7,22 +7,6 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>About</title>
-      <link>/ukraine/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/ukraine/</guid>
-      <description>About Me Algebraist working on issues in software architecture to make javascript fault tolerant.
-2016 - 2020 • npm install remotemon
-• npm install valleydate
-• npm install hoplon
-Career Interactive [ NOVEMBER 2015 - May 2016, London, UK ]
-⚫️ material design ⚫️ mithril.js 🔴 javascript ⚫️ CSS
-Bristol Robotics Laboratory [ OCTOBER 2014 - FEBRUARY 2015, Bristol, UK ]
-⚫️ ABB IRL Series Industrial Arm ⚫️ RAPID programming ⚫️ IronPython/C# ⚫️ computer vision</description>
-    </item>
-    
-    <item>
       <title>Contact</title>
       <link>/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
