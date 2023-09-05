@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title></title>
+    <link>https://sourcevault.github.io/</link>
+    <description>Recent content on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2023 see [COPYING.txt](https://github.com/sourcevault/personal.site/tree/main/blog/COPYING.txt)  |</copyright>
+    <lastBuildDate>Mon, 10 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sourcevault.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sanwa Supply Gravi</title>
+      <link>https://sourcevault.github.io/posts/sanwa_gravi/</link>
+      <pubDate>Mon, 10 Jul 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://sourcevault.github.io/posts/sanwa_gravi/</guid>
+      <description>prevent finger maul by using a trackball.
+People who know me would tell you that I am a big fan of trackball as a replacement for using a mouse. Having tried a couple of different trackballs, the one I am currently using is the Sanwa Gravi, made by Elecom from Japan 🇯🇵. It is one of the better ones I have used, espcially if you replace the stock bearing with a ceremic one.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://sourcevault.github.io/posts/nutzen_guard_instance/</link>
+      <pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://sourcevault.github.io/posts/nutzen_guard_instance/</guid>
+      <description>nutzen@2.0.6 nutzen.guard .this variable now points to object instance. All functions defined within nutzen.guard now have the .this point to the calling instance&amp;rsquo;s value, this has special usecase when we are dealing with object models that require handling large number of state values.
+A simple vanilla javascript example will make things clear:
+var tank = {} tank.move = function(x,y) { this.x = this.x + x this.y = this.y + y } tank.</description>
+    </item>
+    
+    <item>
+      <title>symbol lookup performance</title>
+      <link>https://sourcevault.github.io/posts/symbol_perf/</link>
+      <pubDate>Wed, 04 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://sourcevault.github.io/posts/symbol_perf/</guid>
+      <description>In javascript symbols can be used as keys to store private values like so:
+sig = Symbol &amp;#34;self&amp;#34; ob = {} ob.self = null ob[sig] = null symbol_look = function() { ob[sig] = Math.random() } normal_look = function() { ob.self = Math.random() } The private value self is accessible publicly while the one using sig is not, I was curious to know if there was significant performance penalty for using symbols.</description>
+    </item>
+    
+    <item>
+      <title>air-conditioner coil</title>
+      <link>https://sourcevault.github.io/posts/gree/</link>
+      <pubDate>Fri, 06 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://sourcevault.github.io/posts/gree/</guid>
+      <description>brand new AC, weird thermal reading, showing uneven coil heat exachange.</description>
+    </item>
+    
+    
+    <item>
+      <title>Contact</title>
+      <link>https://sourcevault.github.io/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://sourcevault.github.io/contact/</guid>
+      <description>contact</description>
+    </item>
+    
+    
+  </channel>
+</rss>

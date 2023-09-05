@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>recherche on </title>
+    <link>https://sourcevault.github.io/fr/search/</link>
+    <description>Recent content in recherche on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr</language>
+    <copyright>&amp;copy; 2023 voir [COPYING.txt](https://github.com/sourcevault/personal.site/tree/main/blog/COPYING.txt)  |</copyright><atom:link href="https://sourcevault.github.io/fr/search/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://sourcevault.github.io/sitemap.xml

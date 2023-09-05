@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Elecom Huge on </title>
+    <link>https://sourcevault.github.io/tags/elecom-huge/</link>
+    <description>Recent content in Elecom Huge on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2023 see [COPYING.txt](https://github.com/sourcevault/personal.site/tree/main/blog/COPYING.txt)  |</copyright>
+    <lastBuildDate>Mon, 10 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sourcevault.github.io/tags/elecom-huge/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sanwa Supply Gravi</title>
+      <link>https://sourcevault.github.io/posts/sanwa_gravi/</link>
+      <pubDate>Mon, 10 Jul 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://sourcevault.github.io/posts/sanwa_gravi/</guid>
+      <description>prevent finger maul by using a trackball.
+People who know me would tell you that I am a big fan of trackball as a replacement for using a mouse. Having tried a couple of different trackballs, the one I am currently using is the Sanwa Gravi, made by Elecom from Japan 🇯🇵. It is one of the better ones I have used, espcially if you replace the stock bearing with a ceremic one.</description>
+    </item>
+    
+  </channel>
+</rss>

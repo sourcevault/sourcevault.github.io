@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head>
+    <link rel="stylesheet" href="../../button.css"><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+
+<meta name="keywords" content="nutzen, algebraic data types, livescript">
+<meta name="description" content="nutzen@2.0.6 nutzen.guard .this variable now points to object instance. All functions defined within nutzen.guard now have the .this point to the calling instance&rsquo;s value, this has special usecase when we are dealing with object models that require handling large number of state values.
+A simple vanilla javascript example will make things clear:
+var tank = {} tank.move = function(x,y) { this.x = this.x &#43; x this.y = this.y &#43; y } tank.">
+<meta name="author" content="sourcevault">
+<link rel="canonical" href="https://sourcevault.github.io/posts/nutzen_guard_instance/">
+<link crossorigin="anonymous" href="../../assets/css/stylesheet.3613efbd0b1772781e8f49935e973cae632a7f61471c05b17be155505ccf87b5.css" integrity="sha256-NhPvvQsXcngej0mTXpc8rmMqf2FHHAWxe&#43;FVUFzPh7U=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="../../assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://sourcevault.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://sourcevault.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://sourcevault.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://sourcevault.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://sourcevault.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://sourcevault.github.io/posts/nutzen_guard_instance/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><meta property="og:title" content="" />
+<meta property="og:description" content="nutzen@2.0.6 nutzen.guard .this variable now points to object instance. All functions defined within nutzen.guard now have the .this point to the calling instance&rsquo;s value, this has special usecase when we are dealing with object models that require handling large number of state values.
+A simple vanilla javascript example will make things clear:
+var tank = {} tank.move = function(x,y) { this.x = this.x &#43; x this.y = this.y &#43; y } tank." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sourcevault.github.io/posts/nutzen_guard_instance/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-06-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-06-27T00:00:00+00:00" /><meta property="og:site_name" content="notes by sourcevault" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="nutzen@2.0.6 nutzen.guard .this variable now points to object instance. All functions defined within nutzen.guard now have the .this point to the calling instance&rsquo;s value, this has special usecase when we are dealing with object models that require handling large number of state values.
+A simple vanilla javascript example will make things clear:
+var tank = {} tank.move = function(x,y) { this.x = this.x &#43; x this.y = this.y &#43; y } tank."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://sourcevault.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "",
+      "item": "https://sourcevault.github.io/posts/nutzen_guard_instance/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "name": "",
+  "description": "nutzen@2.0.6 nutzen.guard .this variable now points to object instance. All functions defined within nutzen.guard now have the .this point to the calling instance\u0026rsquo;s value, this has special usecase when we are dealing with object models that require handling large number of state values.\nA simple vanilla javascript example will make things clear:\nvar tank = {} tank.move = function(x,y) { this.x = this.x + x this.y = this.y + y } tank.",
+  "keywords": [
+    "nutzen", "algebraic data types", "livescript"
+  ],
+  "articleBody": "nutzen@2.0.6 nutzen.guard .this variable now points to object instance. All functions defined within nutzen.guard now have the .this point to the calling instance’s value, this has special usecase when we are dealing with object models that require handling large number of state values.\nA simple vanilla javascript example will make things clear:\nvar tank = {} tank.move = function(x,y) { this.x = this.x + x this.y = this.y + y } tank.shoot = function(round_type = \"apcr\") { internal_shell = this.shell if (internal_shell[round_type] \u003c= 0) { console.log(\"no more \" + round_type + \", tank has run out of ammo !\") } else { internal_shell[round_type] = internal_shell[round_type] - 1 } } var ins_bare = Object.create(tank) var self_data = { x:0, y:0, shell: heat: 10, apcr: 10 // armour piercing rounds } var tank_1 = Object.assign(ins_bare,self_data) In our example we have a tank object class with two prototype function describing the behavior move and shoot.\nThe issue with the code above is error handling is tied together with application logic, the reason for introducing guards and pattern matching in the first place is so that we can keep these concerns seperate to one another.\nWe are now going to now add guards to refactor the code to put error handling in a seperate function:\nvar nutzen = require(\"nutzen\") hop = nutzen.guard var move = {} var shoot = {} // 1. move methods move.main = function(x,y) { this.x = this.x + x this.y = this.y + y } move.err = function() { console.log(\"Argument Error (move) : requires mininum of 2 arguments (x,y).\") } shoot.check_arg = function(rt) { if ((rt == \"aprc\") || (rt == \"heat\")) return true else return false } // 2. shoot methods shoot.main = function(round_type = \"apcr\") { internal_shell = this.shell if (internal_shell[round_type] \u003c= 0) { console.log(\"no more \" + round_type + \", tank has run out of ammo !\") } else { internal_shell[round_type] = internal_shell[round_type] - 1 } } shoot.err = function() { console.log(\"Argument Error (shoot): incorrect value.\") } // bringing everything together var tank = {} tank.move = hop.ar(2,move.main).def(move.err) tank.shoot = hop.arwh(1,shoot.check_arg,shoot.main).def(shoot.err) var instance_bare = Object.create(tank) var mutating_data = { x:0, y:0, shell: heat: 10, apcr: 10 // armour piercing rounds } var tank_1 = Object.assign(instance_bare,mutating_data) In the code using nutzen.guard the application logic and error handling is cleanly seperated.\nAs the complexity of our object grows, we can even move the application logic and error handling into two seperate files (e.g core.ls and error.ls).\nUsing guards removes all the error-handling clutter from the main part of our code.\n",
+  "wordCount" : "421",
+  "inLanguage": "en",
+  "datePublished": "2023-06-27T00:00:00Z",
+  "dateModified": "2023-06-27T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "sourcevault"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sourcevault.github.io/posts/nutzen_guard_instance/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sourcevault.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class=" dark" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <ul class="lang-switch"><li>|</li>
+                    <li>
+                        <a href="https://sourcevault.github.io/fr/" title="French"
+                            aria-label="Français">Fr</a>
+                    </li>
+                    <li>
+                        <a href="https://sourcevault.github.io/ru/" title="Русский"
+                            aria-label="Русский">Ru</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://sourcevault.github.io/archive/" title="posts">
+                    <span>posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://sourcevault.github.io/search/" title="search">
+                    <span>search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://sourcevault.github.io/tags/" title="tags">
+                    <span>tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://sourcevault.github.io/contact/" title="contact">
+                    <span>contact</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://sourcevault.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://sourcevault.github.io/posts/">Posts</a></div>
+    <h1 class="post-title">
+      
+    </h1>
+    <div class="post-meta"><span title='2023-06-27 00:00:00 +0000 UTC'>June 27, 2023</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;sourcevault
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="nutzen206"><code>nutzen@2.0.6</code><a hidden class="anchor" aria-hidden="true" href="#nutzen206">#</a></h1>
+<ul>
+<li><strong><code>nutzen.guard</code> <code>.this</code> variable now points to object instance.</strong></li>
+</ul>
+<p>All functions defined within <code>nutzen.guard</code> now have the <code>.this</code> point to the calling instance&rsquo;s value, this has special usecase when we are dealing with object models that require handling large number of state values.</p>
+<p>A simple vanilla javascript example will make things clear:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tank</span> <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">tank</span>.<span style="color:#a6e22e">move</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">x</span>,<span style="color:#a6e22e">y</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">x</span>  <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">x</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">x</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">y</span>  <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">y</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">y</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">tank</span>.<span style="color:#a6e22e">shoot</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">round_type</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;apcr&#34;</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">internal_shell</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">shell</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">internal_shell</span>[<span style="color:#a6e22e">round_type</span>] <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;no more &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">round_type</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;, tank has run out of ammo !&#34;</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">internal_shell</span>[<span style="color:#a6e22e">round_type</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">internal_shell</span>[<span style="color:#a6e22e">round_type</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ins_bare</span>  <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">tank</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">self_data</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">x</span><span style="color:#f92672">:</span><span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">y</span><span style="color:#f92672">:</span><span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">shell</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">heat</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">apcr</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span> <span style="color:#75715e">// armour piercing rounds
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tank_1</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">assign</span>(<span style="color:#a6e22e">ins_bare</span>,<span style="color:#a6e22e">self_data</span>)
+</span></span></code></pre></div><p>In our example we have a tank object class with two prototype function describing the behavior <code>move</code> and <code>shoot</code>.</p>
+<p>The issue with the code above is error handling is tied together with application logic, the reason for introducing guards and pattern matching in the first place is so that we can keep these concerns seperate to one another.</p>
+<p>We are now going to now add guards to refactor the code to put error handling in a seperate function:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">nutzen</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;nutzen&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">hop</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">nutzen</span>.<span style="color:#a6e22e">guard</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">move</span> <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">shoot</span> <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 1. move methods
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">move</span>.<span style="color:#a6e22e">main</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">x</span>,<span style="color:#a6e22e">y</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">x</span>  <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">x</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">x</span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">y</span>  <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">y</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">y</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">move</span>.<span style="color:#a6e22e">err</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Argument Error (move) : requires mininum of 2 arguments (x,y).&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">shoot</span>.<span style="color:#a6e22e">check_arg</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">rt</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ((<span style="color:#a6e22e">rt</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;aprc&#34;</span>) <span style="color:#f92672">||</span> (<span style="color:#a6e22e">rt</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;heat&#34;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 2. shoot methods
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">shoot</span>.<span style="color:#a6e22e">main</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">round_type</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;apcr&#34;</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">internal_shell</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">shell</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">internal_shell</span>[<span style="color:#a6e22e">round_type</span>] <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;no more &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">round_type</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;, tank has run out of ammo !&#34;</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">internal_shell</span>[<span style="color:#a6e22e">round_type</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">internal_shell</span>[<span style="color:#a6e22e">round_type</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">shoot</span>.<span style="color:#a6e22e">err</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Argument Error (shoot): incorrect value.&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// bringing everything together
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tank</span> <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">tank</span>.<span style="color:#a6e22e">move</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">hop</span>.<span style="color:#a6e22e">ar</span>(<span style="color:#ae81ff">2</span>,<span style="color:#a6e22e">move</span>.<span style="color:#a6e22e">main</span>).<span style="color:#a6e22e">def</span>(<span style="color:#a6e22e">move</span>.<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">tank</span>.<span style="color:#a6e22e">shoot</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">hop</span>.<span style="color:#a6e22e">arwh</span>(<span style="color:#ae81ff">1</span>,<span style="color:#a6e22e">shoot</span>.<span style="color:#a6e22e">check_arg</span>,<span style="color:#a6e22e">shoot</span>.<span style="color:#a6e22e">main</span>).<span style="color:#a6e22e">def</span>(<span style="color:#a6e22e">shoot</span>.<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">instance_bare</span>  <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">tank</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">mutating_data</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">x</span><span style="color:#f92672">:</span><span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">y</span><span style="color:#f92672">:</span><span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">shell</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">heat</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">apcr</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span> <span style="color:#75715e">// armour piercing rounds
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tank_1</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">assign</span>(<span style="color:#a6e22e">instance_bare</span>,<span style="color:#a6e22e">mutating_data</span>)
+</span></span></code></pre></div><p>In the code using <code>nutzen.guard</code> the application logic and error handling is cleanly seperated.</p>
+<p>As the complexity of our object grows, we can even move the application logic and error handling into two seperate files (e.g <code>core.ls</code> and <code>error.ls</code>).</p>
+<p>Using guards removes all the error-handling clutter from the main part of our code.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://sourcevault.github.io/tags/nutzen/">nutzen</a></li>
+      <li><a href="https://sourcevault.github.io/tags/algebraic-data-types/">algebraic data types</a></li>
+      <li><a href="https://sourcevault.github.io/tags/livescript/">livescript</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>© 2023 see <a href="https://github.com/sourcevault/personal.site/tree/main/blog/COPYING.txt">COPYING.txt</a>  |</span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

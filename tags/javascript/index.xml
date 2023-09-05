@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>javascript on </title>
+    <link>https://sourcevault.github.io/tags/javascript/</link>
+    <description>Recent content in javascript on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2023 see [COPYING.txt](https://github.com/sourcevault/personal.site/tree/main/blog/COPYING.txt)  |</copyright>
+    <lastBuildDate>Wed, 04 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sourcevault.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>symbol lookup performance</title>
+      <link>https://sourcevault.github.io/posts/symbol_perf/</link>
+      <pubDate>Wed, 04 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://sourcevault.github.io/posts/symbol_perf/</guid>
+      <description>In javascript symbols can be used as keys to store private values like so:
+sig = Symbol &amp;#34;self&amp;#34; ob = {} ob.self = null ob[sig] = null symbol_look = function() { ob[sig] = Math.random() } normal_look = function() { ob.self = Math.random() } The private value self is accessible publicly while the one using sig is not, I was curious to know if there was significant performance penalty for using symbols.</description>
+    </item>
+    
+  </channel>
+</rss>
