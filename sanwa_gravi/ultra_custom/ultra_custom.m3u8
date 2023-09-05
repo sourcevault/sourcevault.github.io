@@ -1,0 +1,13 @@
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-TARGETDURATION:8
+#EXT-X-MEDIA-SEQUENCE:0
+#EXTINF:8.333333,
+ultra_custom0.ts
+#EXTINF:8.333333,
+ultra_custom1.ts
+#EXTINF:8.333333,
+ultra_custom2.ts
+#EXTINF:8.033333,
+ultra_custom3.ts
+#EXT-X-ENDLIST
