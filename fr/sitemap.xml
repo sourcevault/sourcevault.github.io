@@ -5,13 +5,13 @@
     <loc>https://sourcevault.github.io/fr/</loc>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="https://sourcevault.github.io/"
+                hreflang="ru"
+                href="https://sourcevault.github.io/ru/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="ru"
-                href="https://sourcevault.github.io/ru/"
+                hreflang="en"
+                href="https://sourcevault.github.io/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -73,13 +73,13 @@
     <loc>https://sourcevault.github.io/fr/tags/</loc>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="https://sourcevault.github.io/tags/"
+                hreflang="ru"
+                href="https://sourcevault.github.io/ru/tags/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="ru"
-                href="https://sourcevault.github.io/ru/tags/"
+                hreflang="en"
+                href="https://sourcevault.github.io/tags/"
                 />
     <xhtml:link
                 rel="alternate"

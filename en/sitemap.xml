@@ -6,13 +6,13 @@
     <lastmod>2023-07-10T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="fr"
-                href="https://sourcevault.github.io/fr/"
+                hreflang="ru"
+                href="https://sourcevault.github.io/ru/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="ru"
-                href="https://sourcevault.github.io/ru/"
+                hreflang="fr"
+                href="https://sourcevault.github.io/fr/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -28,24 +28,44 @@
   </url><url>
     <loc>https://sourcevault.github.io/posts/</loc>
     <lastmod>2023-07-10T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://sourcevault.github.io/ru/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://sourcevault.github.io/posts/"
+                />
   </url><url>
     <loc>https://sourcevault.github.io/tags/repetitive-strain-injury/</loc>
     <lastmod>2023-07-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://sourcevault.github.io/posts/sanwa_gravi/</loc>
     <lastmod>2023-07-10T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://sourcevault.github.io/ru/posts/sanwa_gravi/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://sourcevault.github.io/posts/sanwa_gravi/"
+                />
   </url><url>
     <loc>https://sourcevault.github.io/tags/</loc>
     <lastmod>2023-07-10T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
-                hreflang="fr"
-                href="https://sourcevault.github.io/fr/tags/"
+                hreflang="ru"
+                href="https://sourcevault.github.io/ru/tags/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="ru"
-                href="https://sourcevault.github.io/ru/tags/"
+                hreflang="fr"
+                href="https://sourcevault.github.io/fr/tags/"
                 />
     <xhtml:link
                 rel="alternate"
